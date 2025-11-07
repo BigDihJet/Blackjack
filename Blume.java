@@ -2,7 +2,7 @@
 /**
  *  Blume, die darauf wartet gesammelt zu werden
  * 
- * @author Jet
+ * @author Jan-Luca
  * @version 1.0
  */
 public class Blume extends Figur
