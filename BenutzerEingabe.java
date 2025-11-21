@@ -1,9 +1,9 @@
 import java.util.*;
-public class BenutzerEingabe {
+public class BenutzerEingabe extends Text {
     private int kapital           = 2000;
     private int einsatzWert       = 0;
     private final List<Card> deck = new ArrayList<>();
-    private final Scanner scanner = new Scanner(System.in);
+    //private final Scanner scanner = new Scanner(System.in);
     // Dealer- und Player-Werte
     private int dValue = 0;
     private int pValue = 0;
@@ -16,26 +16,30 @@ public class BenutzerEingabe {
         initDeck();
         shuffleDeck();
         new Text();
-        This.TextSetzen(Willkommen am Blackjack-Tisch!)
-        System.out.println("Willkommen am Blackjack-Tisch!");
+        TextSetzen("Willkommen am Blackjack-Tisch!");
+        //System.out.println("Willkommen am Blackjack-Tisch!");
         while (kapital > 0) {
             einsatzSetzen();
             playOneHand();
-            System.out.println("Aktuelles Kapital: " + kapital);
+            TextSetzen("Aktuelles Kapital: ");
+            //System.out.println("Aktuelles Kapital: " + kapital);
             if (!askYesNo("Weiter spielen? (j/n): ")) {
-                System.out.println("Du verlässt den Tisch mit Kapital: " + kapital);
+                //System.out.println("Du verlässt den Tisch mit Kapital: " + kapital);
+                TextSetzen("Du verlässt den Tisch mit Kapital: "+ kapital);
                 break;
             }
             if (deck.size() < 15) {
                 initDeck();
                 shuffleDeck();
-                System.out.println("Neues Deck gemischt.");
+                //System.out.println("Neues Deck gemischt.");
+                TextSetzen("Neues Deck gemischt.");
             }
         }
         if (kapital <= 0) {
-            System.out.println("Dein Kapital ist aufgebraucht ; Spiel beendet.");
+            TextSetzen("Dein Kapital ist aufgebrauch ; Spiel Beendet.");
+            //System.out.println("Dein Kapital ist aufgebraucht ; Spiel beendet.");
         }
-        scanner.close(); 
+        //scanner.close(); 
     }
     private void playOneHand() {
         // Dealer zieht zwei Karten
@@ -43,16 +47,19 @@ public class BenutzerEingabe {
         Card d2 = karteZiehen();
         dValue = d1.getValue() + d2.getValue();
         if (dValue == 21) {
-            System.out.println("Dealer hat Blackjack! Karten: " + d1 + ", " + d2);
+            //System.out.println("Dealer hat Blackjack! Karten: " + d1 + ", " + d2);
+            TextSetzen("Dealer hat Blackjack! Karten: " + d1 + ", " + d2);
             return;
         } else {
-            System.out.println("Dealer zeigt: " + d1 + ", [versteckt]");
+            TextSetzen("Dealer zeigt: " + d1 + ", [versteckt]");
+            //System.out.println("Dealer zeigt: " + d1 + ", [versteckt]");
         }
         // Player zieht zwei Karten
         Card p1 = karteZiehen();
         Card p2 = karteZiehen();
         pValue = p1.getValue() + p2.getValue();
-        System.out.println("Player zeigt: " + p1 + ", " + p2 + " (Wert: " + pValue + ")");
+        TextSetzen("Player zeigt: " + p1 + ", " + p2 + " (Wert: " + pValue + ")");
+        //System.out.println("Player zeigt: " + p1 + ", " + p2 + " (Wert: " + pValue + ")");
         if (pValue == 21) {
             System.out.println("Player hat Blackjack!!!");
             kapital += einsatzWert + (int) (einsatzWert * 1.5);
@@ -93,7 +100,7 @@ public class BenutzerEingabe {
     private void stayOrHit() {
         while (true) {
             System.out.print("Hit oder Stay? (s/h): "); 
-            String antwort = scanner.nextLine().trim().toLowerCase();
+            //String antwort = scanner.nextLine().trim().toLowerCase();
             if ("h".equals(antwort)) {
                 Card c = karteZiehen();
                 pValue += c.getValue();
