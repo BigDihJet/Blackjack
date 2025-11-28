@@ -11,17 +11,24 @@ public class BlackjackGUI extends JFrame {
     public BlackjackGUI() {
         setTitle("Blackjack Tisch");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
+        setSize(800, 600);
+        setLocationRelativeTo(null);
 
         game = new Game();
 
+        // LayeredPane für Hintergrund + Overlay
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setPreferredSize(new Dimension(800, 600));
+
         // Tisch-Hintergrund
         TablePanel tablePanel = new TablePanel();
-        add(tablePanel, BorderLayout.CENTER);
+        tablePanel.setBounds(0, 0, 800, 600);
+        layeredPane.add(tablePanel, Integer.valueOf(0));
 
         // Overlay für Kartenanzeige
         JPanel overlayPanel = new JPanel(new GridLayout(2, 1));
         overlayPanel.setOpaque(false);
+        overlayPanel.setBounds(0, 200, 800, 100);
         dealerLabel = new JLabel("Dealer: ");
         playerLabel = new JLabel("Spieler: ");
         dealerLabel.setForeground(Color.WHITE);
@@ -30,13 +37,13 @@ public class BlackjackGUI extends JFrame {
         playerLabel.setHorizontalAlignment(SwingConstants.CENTER);
         overlayPanel.add(dealerLabel);
         overlayPanel.add(playerLabel);
-        add(overlayPanel, BorderLayout.CENTER);
+        layeredPane.add(overlayPanel, Integer.valueOf(1));
 
         // Steuerung unten
-        JPanel controlPanel = new JPanel();
+        JPanel controlPanel = new JPanel(new GridLayout(3, 2, 10, 10));
+        controlPanel.setBounds(0, 450, 800, 100);
         controlPanel.setOpaque(true);
         controlPanel.setBackground(new Color(0, 80, 0));
-        controlPanel.setLayout(new GridLayout(3, 2, 10, 10));
 
         kapitalLabel = new JLabel("Kapital: " + game.getKapital());
         einsatzField = new JTextField(5);
@@ -59,12 +66,9 @@ public class BlackjackGUI extends JFrame {
         hitButton.addActionListener(e -> hit());
         stayButton.addActionListener(e -> stay());
 
-        add(controlPanel, BorderLayout.SOUTH);
-        add(statusLabel, BorderLayout.NORTH);
+        layeredPane.add(controlPanel, Integer.valueOf(2));
 
-        pack();
-        setSize(800, 600);
-        setLocationRelativeTo(null);
+        add(layeredPane);
         setVisible(true);
     }
 
