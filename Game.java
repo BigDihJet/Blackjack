@@ -11,7 +11,6 @@ public class Game {
 
     public Game() {
         deck = new Deck();
-        new BlackjackFrame();
         player = new Player("Spieler");
         dealer = new Dealer();
     }

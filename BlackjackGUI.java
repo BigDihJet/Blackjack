@@ -1,7 +1,6 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 public class BlackjackGUI extends JFrame {
     private Game game;
@@ -10,49 +9,63 @@ public class BlackjackGUI extends JFrame {
     private JButton startButton, hitButton, stayButton;
 
     public BlackjackGUI() {
-        setTitle("Blackjack");
-        setSize(500, 400);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setTitle("Blackjack Tisch");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
         game = new Game();
 
-        // Oben: Kapital und Einsatz
-        JPanel topPanel = new JPanel();
+        // Tisch-Hintergrund
+        TablePanel tablePanel = new TablePanel();
+        add(tablePanel, BorderLayout.CENTER);
+
+        // Overlay für Kartenanzeige
+        JPanel overlayPanel = new JPanel(new GridLayout(2, 1));
+        overlayPanel.setOpaque(false);
+        dealerLabel = new JLabel("Dealer: ");
+        playerLabel = new JLabel("Spieler: ");
+        dealerLabel.setForeground(Color.WHITE);
+        playerLabel.setForeground(Color.WHITE);
+        dealerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        playerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        overlayPanel.add(dealerLabel);
+        overlayPanel.add(playerLabel);
+        add(overlayPanel, BorderLayout.CENTER);
+
+        // Steuerung unten
+        JPanel controlPanel = new JPanel();
+        controlPanel.setOpaque(true);
+        controlPanel.setBackground(new Color(0, 80, 0));
+        controlPanel.setLayout(new GridLayout(3, 2, 10, 10));
+
         kapitalLabel = new JLabel("Kapital: " + game.getKapital());
         einsatzField = new JTextField(5);
         startButton = new JButton("Einsatz setzen & Start");
-        topPanel.add(kapitalLabel);
-        topPanel.add(new JLabel("Einsatz:"));
-        topPanel.add(einsatzField);
-        topPanel.add(startButton);
-        add(topPanel, BorderLayout.NORTH);
-
-        // Mitte: Kartenanzeige
-        JPanel centerPanel = new JPanel(new GridLayout(2, 1));
-        dealerLabel = new JLabel("Dealer: ");
-        playerLabel = new JLabel("Spieler: ");
-        centerPanel.add(dealerLabel);
-        centerPanel.add(playerLabel);
-        add(centerPanel, BorderLayout.CENTER);
-
-        // Unten: Buttons und Status
-        JPanel bottomPanel = new JPanel();
         hitButton = new JButton("Hit");
         stayButton = new JButton("Stay");
         statusLabel = new JLabel("Willkommen!");
-        bottomPanel.add(hitButton);
-        bottomPanel.add(stayButton);
-        bottomPanel.add(statusLabel);
-        add(bottomPanel, BorderLayout.SOUTH);
 
-        // Button-Aktionen
+        controlPanel.add(kapitalLabel);
+        controlPanel.add(new JLabel("Einsatz:"));
+        controlPanel.add(einsatzField);
+        controlPanel.add(startButton);
+        controlPanel.add(hitButton);
+        controlPanel.add(stayButton);
+
+        hitButton.setEnabled(false);
+        stayButton.setEnabled(false);
+
         startButton.addActionListener(e -> startGame());
         hitButton.addActionListener(e -> hit());
         stayButton.addActionListener(e -> stay());
 
-        hitButton.setEnabled(false);
-        stayButton.setEnabled(false);
+        add(controlPanel, BorderLayout.SOUTH);
+        add(statusLabel, BorderLayout.NORTH);
+
+        pack();
+        setSize(800, 600);
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
 
     private void startGame() {
@@ -93,5 +106,10 @@ public class BlackjackGUI extends JFrame {
 
     private void endRound() {
         hitButton.setEnabled(false);
+        stayButton.setEnabled(false);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new BlackjackGUI());
     }
 }
