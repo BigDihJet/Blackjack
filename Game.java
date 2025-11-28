@@ -10,6 +10,7 @@ public class Game {
     private Dealer dealer;
 
     public void start() {
+        new BlackjackFrame();
         System.out.println("Willkommen am Blackjack-Tisch!");
         deck = new Deck();
         player = new Player("Spieler");
