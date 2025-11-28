@@ -12,10 +12,10 @@ public class TablePanel extends JPanel {
        g2.setColor(Color.WHITE);
        g2.setStroke(new BasicStroke(3));
        // Tischrand
-       g2.drawOval(0, 50, 800, 500);
+       g2.drawOval(550, 280, 800, 500);
        // Blackjack Text
        g2.setFont(new Font("Arial", Font.BOLD, 36));
-       g2.drawString("BLACKJACK", 300, 120);
+       g2.drawString("BLACKJACK", 840, 367);
        // ´úntertitel
        g2.setFont(new Font("Arial", Font.PLAIN, 18));
        g2.drawString("Dealer muss bis 16 ziehen und ab 17 bleiben.", 250, 150);
