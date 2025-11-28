@@ -93,3 +93,5 @@ public class BlackjackGUI extends JFrame {
 
     private void endRound() {
         hitButton.setEnabled(false);
+    }
+}
